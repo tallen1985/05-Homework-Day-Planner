@@ -54,12 +54,12 @@ function createBlock(block, index){
     const container = $('.container');
     const newBlock = $('<div class="row"></div>')
     
-    newBlock.append($('<div class="hour">' + block.hourString + '</div>'));
+    newBlock.append($('<div class="hour col-2">' + block.hourString + '</div>'));
     newBlock.style
-    textArea.addClass(pastPresentOrFuture(block.hour));
+    textArea.addClass(pastPresentOrFuture(block.hour) + ' col-8');
 
     newBlock.append($(textArea));
-    newBlock.append($('<button class="saveBtn"><i>' + 'Save' + '</i></div>'));
+    newBlock.append($('<button class="saveBtn col-2"><i class="fas fa-save"></i></div>'));
     container.append(newBlock);
 }
 
@@ -72,8 +72,10 @@ for (let x = 0; x < timeBlocks.length; x++) {
 $('.row').on('click', '.saveBtn', function(e){
     const task = $(e.target).parent().siblings().eq(1).val()
     let index = $(e.target).parent().siblings().eq(1).data().index;
-    timeBlocks[index].task = task;
-    console.log(timeBlocks);
+    if (task.length > 0) {
+        timeBlocks[index].task = task;
+        console.log(timeBlocks);
 
-    localStorage.setItem(storageKeyName, JSON.stringify(timeBlocks));
+        localStorage.setItem(storageKeyName, JSON.stringify(timeBlocks));
+    }
 });
