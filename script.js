@@ -38,7 +38,7 @@ function hourString(hour) {
 function pastPresentOrFuture(hour) {
     if (hour > currentHour) {
         return 'future';
-    } else if (hour === currentHour) {
+    } else if (hour == currentHour) {
         return 'present';
     } else {
         return 'past';
