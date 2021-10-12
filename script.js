@@ -75,12 +75,28 @@ for (let key in timeBlocks) {
 }
 
 $('.row').on('click', '.saveBtn', function(e){
-    const task = $(e.target).parent().siblings().eq(1).val().trim();
-    let index = $(e.target).parent().siblings().eq(1).data().key;
-    if (task.length > 0) {
-        timeBlocks[index] = task;
-        localStorage.setItem(storageKeyName, JSON.stringify(timeBlocks));
-        $(e.target).addClass("fa-check-circle").addClass('text-dark').removeClass('fa-save');
-        $(e.target).parent().siblings().eq(1).addClass('text-dark')
+    let task = '';
+    let index = ''
+    if (e.target.matches('i')){
+       task = $(e.target).parent().siblings().eq(1).val().trim(); 
+       index = $(e.target).parent().siblings().eq(1).data().key;
+       if (task.length > 0) {
+            timeBlocks[index] = task;
+            localStorage.setItem(storageKeyName, JSON.stringify(timeBlocks));
+            $(e.target).addClass("fa-check-circle").addClass('text-dark').removeClass('fa-save');
+            $(e.target).parent().siblings().eq(1).addClass('text-dark')
+        }
+    } else {
+        task = $(e.target).siblings().eq(1).val();
+        index = $(e.target).siblings().eq(1).data().key;
+        if (task.length > 0) {
+            timeBlocks[index] = task;
+            localStorage.setItem(storageKeyName, JSON.stringify(timeBlocks));
+            $(e.target).children().addClass("fa-check-circle").addClass('text-dark').removeClass('fa-save');
+            $(e.target).siblings().eq(1).addClass('text-dark')
+        }
     }
+    
+    
+    
 });
