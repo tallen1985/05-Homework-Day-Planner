@@ -71,7 +71,7 @@ $('.row').on('click', '.saveBtn', function(e){
     let index = $(e.target).parent().siblings().eq(1).data().key;
     if (task.length > 0) {
         timeBlocks[index] = task;
-
         localStorage.setItem(storageKeyName, JSON.stringify(timeBlocks));
+        $(e.target).addClass("fa-check-circle").removeClass('fa-save');
     }
 });
