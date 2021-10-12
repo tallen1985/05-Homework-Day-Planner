@@ -1,7 +1,7 @@
 let today = moment();
 let currentHour = today.format('H');
 let timeBlocks = {};
-const storageKeyName = 'timeBlocks: ' + today.format('MM/DD/YYYY');
+const storageKeyName = 'timeBlocks';
 
 $('#currentDay').text(today.format("dddd, MMM Do"));
 
@@ -10,10 +10,15 @@ function initLocalStorage() {
     
     if (localStorage.getItem(storageKeyName)) {
         timeBlocks = JSON.parse(localStorage.getItem(storageKeyName));
-        return;
+        if (timeBlocks.currentDate = today.format('MM/DD/YYYY')){
+          return;  
+        } else {
+            localStorage.removeItem(storageKeyName)
+        }
     }
     
     //populate timeblock array
+    timeBlocks.currentDate = today.format('MM/DD/YYYY');
     for (let hour = 9; hour <= 17; hour++){
         timeBlocks[hour] = '';
         };
@@ -63,15 +68,19 @@ function createBlock(time){
 initLocalStorage();
 
 for (let key in timeBlocks) {
-    createBlock(key)
+    if (key != "currentDate") {
+        createBlock(key) 
+    }
+    
 }
 
 $('.row').on('click', '.saveBtn', function(e){
-    const task = $(e.target).parent().siblings().eq(1).val()
+    const task = $(e.target).parent().siblings().eq(1).val().trim();
     let index = $(e.target).parent().siblings().eq(1).data().key;
     if (task.length > 0) {
         timeBlocks[index] = task;
         localStorage.setItem(storageKeyName, JSON.stringify(timeBlocks));
-        $(e.target).addClass("fa-check-circle").removeClass('fa-save');
+        $(e.target).addClass("fa-check-circle").addClass('text-dark').removeClass('fa-save');
+        $(e.target).parent().siblings().eq(1).addClass('text-dark')
     }
 });
