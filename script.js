@@ -10,7 +10,7 @@ function initLocalStorage() {
     
     if (localStorage.getItem(storageKeyName)) {
         timeBlocks = JSON.parse(localStorage.getItem(storageKeyName));
-        if (timeBlocks.currentDate = today.format('MM/DD/YYYY')){
+        if (timeBlocks.currentDate == today.format('MM/DD/YYYY')){
           return;  
         } else {
             localStorage.removeItem(storageKeyName)
