@@ -1,12 +1,15 @@
+//Global Variables
 let today = moment();
 let currentHour = today.format('H');
 let timeBlocks = {};
 const storageKeyName = 'timeBlocks';
 
+//Display today's date
 $('#currentDay').text(today.format("dddd, MMM Do"));
 
+//Check to see if existing localStorage exists, if it is from today, and if so load it.
+//if not, clear it.
 function initLocalStorage() {
-    //creates string with localStorage key name (i.e. timeblocks: 10/06/2021)
     
     if (localStorage.getItem(storageKeyName)) {
         timeBlocks = JSON.parse(localStorage.getItem(storageKeyName));
@@ -26,6 +29,7 @@ function initLocalStorage() {
     localStorage.setItem(storageKeyName, JSON.stringify(timeBlocks));
 }
 
+//convert time to legible string (i.e. 9 => 9am or 14 => 2pm)
 function hourString(hour) {
     if (hour < 12) {
         return hour + 'am';
@@ -36,6 +40,7 @@ function hourString(hour) {
     }
 }
 
+//compare current time to timeblock and color accordingly
 function pastPresentOrFuture(hour) {
     hour = Number(hour);
     currentHour = Number(currentHour);
@@ -48,6 +53,7 @@ function pastPresentOrFuture(hour) {
     }
 }
 
+//dynamically create time blocks with information from localStorage (if available)
 function createBlock(time){
     let task = '';
     if (timeBlocks[time]) {
@@ -65,6 +71,7 @@ function createBlock(time){
     container.append(newBlock);
 }
 
+//call function to initiate localStorage
 initLocalStorage();
 
 for (let key in timeBlocks) {
@@ -74,6 +81,7 @@ for (let key in timeBlocks) {
     
 }
 
+//create click event to update localStorage with input into timeblock and change icon to a check mark.
 $('.row').on('click', '.saveBtn', function(e){
     let task = '';
     let index = ''
